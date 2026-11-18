@@ -1,4 +1,4 @@
-# 🧠 Edge-AI Tensor SoC: RISC-V RV32I Processor with Systolic NPU Accelerator & DMA Engine
+# Edge-AI Tensor SoC: RISC-V RV32I Processor with Systolic NPU Accelerator & DMA Engine
 
 [![Simulation](https://img.shields.io/badge/Simulation-100%25%20PASSED-brightgreen.svg?style=for-the-badge&logo=checkmarx)](https://github.com/lytuannghi)
 [![ISA](https://img.shields.io/badge/ISA-RISC--V%20RV32I-blue.svg?style=for-the-badge)](https://riscv.org/)
@@ -20,7 +20,7 @@ Designed and verified by **Lý Tuấn Nghi ([@lytuannghi](https://github.com/lyt
 
 ---
 
-## 🏗️ Hardware Architecture
+## Hardware Architecture
 
 ```mermaid
 flowchart TD
@@ -57,26 +57,26 @@ flowchart TD
 
 ---
 
-## 📊 Verification & Co-Simulation Results
+## Verification & Co-Simulation Results
 
 The complete hardware/software co-simulation boots from ROM, streams pre-trained weights and inputs through the DMA, computes a $4 \times 4$ INT8 tensor dot-product on the Systolic Array, applies Bias + ReLU + Quantization, and streams console telemetry out to UART:
 
 ```text
 ========================================================
-🚀 STARTING EDGE-AI TENSOR SOC HARDWARE VERIFICATION
+ STARTING EDGE-AI TENSOR SOC HARDWARE VERIFICATION
 ========================================================
-ℹ️  Architecture: RV32I CPU + 4x4 Systolic Array + DMA + Post-Processing
-ℹ️  System Reset Released. Booting RISC-V CPU from ROM...
+  Architecture: RV32I CPU + 4x4 Systolic Array + DMA + Post-Processing
+  System Reset Released. Booting RISC-V CPU from ROM...
 
-📡 UART CONSOLE: AI NPU INFERENCE: PASS!
+ UART CONSOLE: AI NPU INFERENCE: PASS!
 
 --------------------------------------------------------
-📊 VERIFYING NPU ACCELERATOR & DATA SRAM INFERENCE RESULTS:
-✅ [PASS] Firmware Completion Signature Verified: 0xcafeface
-✅ [PASS] AI NPU Matrix Result Row 0 Verified: 0x04030202 (Non-zero INT8 Tensor)
-✅ [PASS] UART Serial Console Transmission Verified (24 characters received)!
+ VERIFYING NPU ACCELERATOR & DATA SRAM INFERENCE RESULTS:
+ [PASS] Firmware Completion Signature Verified: 0xcafeface
+ [PASS] AI NPU Matrix Result Row 0 Verified: 0x04030202 (Non-zero INT8 Tensor)
+ [PASS] UART Serial Console Transmission Verified (24 characters received)!
 ========================================================
-🏆 STATUS: 100% EDGE-AI TENSOR SOC VERIFICATION PASSED!
+ STATUS: 100% EDGE-AI TENSOR SOC VERIFICATION PASSED!
 ========================================================
 ```
 
@@ -86,7 +86,7 @@ The complete hardware/software co-simulation boots from ROM, streams pre-trained
 
 ---
 
-## ⚡ Quickstart
+## Quickstart
 
 ```powershell
 # Run the complete hardware/software co-simulation
