@@ -4,10 +4,10 @@ Method : Static Verilog/SV Structural Parser + SDC Constraint Audit
 Note   : Foundry Gate-Level Netlist & STA require PDK Liberty (.lib) + Synopsys/OpenROAD
 ================================================================================
 RTL Source Files Inspected : 17
-Code Lines (Non-Comment)   : 1501
+Code Lines (Non-Comment)   : 1519
 Sequential Blocks          : 22
 Combinational Blocks       : 9
-Declared reg/logic Signals : 89
+Declared reg/logic Signals : 90
 
 MODULE BREAKDOWN:
   rtl\bus\soc_interconnect.v                    | modules=soc_interconnect             | loc= 125 | seq= 2 | comb= 1
@@ -26,7 +26,7 @@ MODULE BREAKDOWN:
   rtl\uart\baudrate_gen.v                       | modules=baudrate_gen                 | loc=  44 | seq= 2 | comb= 0
   rtl\uart\fifo_sync.v                          | modules=fifo_sync                    | loc=  65 | seq= 3 | comb= 0
   rtl\uart\uart_rx.v                            | modules=uart_rx                      | loc=  98 | seq= 2 | comb= 0
-  rtl\uart\uart_tx.v                            | modules=uart_tx                      | loc=  73 | seq= 1 | comb= 0
+  rtl\uart\uart_tx.v                            | modules=uart_tx                      | loc=  91 | seq= 1 | comb= 0
 
 SDC CLOCK CONSTRAINTS:
   soc_top.sdc: port=clk | period=20.00 ns | target=50.00 MHz
