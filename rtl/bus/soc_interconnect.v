@@ -66,7 +66,7 @@ module soc_interconnect (
     integer i;
     initial begin
         for (i = 0; i < 512; i = i + 1) rom[i] = 32'h00000013; // NOP
-        $readmemh("D:/CODE/GGANTIGRAVITY/riscv-soc-ai-accelerator/firmware/boot_firmware.hex", rom, 0, 277);
+        $readmemh("firmware/boot_firmware.hex", rom, 0, 277);
     end
 
     assign cpu_instr_data = rom[rom_addr];

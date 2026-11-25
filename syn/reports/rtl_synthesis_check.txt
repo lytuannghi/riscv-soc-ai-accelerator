@@ -1,0 +1,35 @@
+================================================================================
+RTL SYNTHESIS READINESS & CONSTRAINT REPORT: riscv-soc-ai-accelerator
+Method : Static Verilog/SV Structural Parser + SDC Constraint Audit
+Note   : Foundry Gate-Level Netlist & STA require PDK Liberty (.lib) + Synopsys/OpenROAD
+================================================================================
+RTL Source Files Inspected : 17
+Code Lines (Non-Comment)   : 1501
+Sequential Blocks          : 22
+Combinational Blocks       : 9
+Declared reg/logic Signals : 89
+
+MODULE BREAKDOWN:
+  rtl\bus\soc_interconnect.v                    | modules=soc_interconnect             | loc= 125 | seq= 2 | comb= 1
+  rtl\cpu\riscv_alu.v                           | modules=riscv_alu                    | loc=  30 | seq= 0 | comb= 1
+  rtl\cpu\riscv_core.v                          | modules=riscv_core                   | loc= 184 | seq= 1 | comb= 3
+  rtl\cpu\riscv_regfile.v                       | modules=riscv_regfile                | loc=  26 | seq= 1 | comb= 0
+  rtl\npu\npu_dma.v                             | modules=npu_dma                      | loc=  83 | seq= 1 | comb= 0
+  rtl\npu\npu_top.v                             | modules=npu_top                      | loc= 272 | seq= 3 | comb= 2
+  rtl\npu\pe.v                                  | modules=pe                           | loc=  33 | seq= 1 | comb= 0
+  rtl\npu\post_process_unit.v                   | modules=post_process_unit            | loc=  22 | seq= 0 | comb= 1
+  rtl\npu\skew_buffer.v                         | modules=skew_buffer                  | loc=  46 | seq= 3 | comb= 0
+  rtl\npu\systolic_array_4x4.v                  | modules=systolic_array_4x4           | loc=  67 | seq= 0 | comb= 0
+  rtl\soc_top.v                                 | modules=soc_top                      | loc= 120 | seq= 0 | comb= 0
+  rtl\uart\apb_slave_regs.v                     | modules=apb_slave_regs               | loc=  77 | seq= 1 | comb= 1
+  rtl\uart\apb_uart_top.v                       | modules=apb_uart_top                 | loc= 136 | seq= 1 | comb= 0
+  rtl\uart\baudrate_gen.v                       | modules=baudrate_gen                 | loc=  44 | seq= 2 | comb= 0
+  rtl\uart\fifo_sync.v                          | modules=fifo_sync                    | loc=  65 | seq= 3 | comb= 0
+  rtl\uart\uart_rx.v                            | modules=uart_rx                      | loc=  98 | seq= 2 | comb= 0
+  rtl\uart\uart_tx.v                            | modules=uart_tx                      | loc=  73 | seq= 1 | comb= 0
+
+SDC CLOCK CONSTRAINTS:
+  soc_top.sdc: port=clk | period=20.00 ns | target=50.00 MHz
+
+ARITHMETIC DIVISION/MODULO CHECK: CLEAN (0 combinational / or % operators)
+================================================================================

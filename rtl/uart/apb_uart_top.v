@@ -149,7 +149,7 @@ module apb_uart_top (
     uart_tx u_uart_tx (
         .clk       (pclk),
         .rst_n     (preset_n),
-        .tx_tick   (tx_tick),
+        .tx_tick   (rx_tick),
         .tx_start  (tx_trigger),
         .tx_data   (tx_fifo_rd_data),
         .tx_enable (reg_ctrl[0]),

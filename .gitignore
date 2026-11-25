@@ -9,3 +9,7 @@ giaithichdoan.md
 *GIAI_THICH*.md
 *HUONG_DAN*.md
 *INTERVIEW*.md
+
+sim/cocotb_build/
+results.xml
+*.xml

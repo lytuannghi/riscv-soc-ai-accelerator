@@ -110,17 +110,41 @@ module npu_top (
     reg signed [7:0] raw_act_0, raw_act_1, raw_act_2, raw_act_3;
     reg signed [7:0] raw_wgt_0, raw_wgt_1, raw_wgt_2, raw_wgt_3;
 
-    always @(*) begin
-        if (feeding_active && step_cnt < 4'd4) begin
-            raw_act_0 = act_bank[step_cnt][0];
-            raw_act_1 = act_bank[step_cnt][1];
-            raw_act_2 = act_bank[step_cnt][2];
-            raw_act_3 = act_bank[step_cnt][3];
+    // Flatten 2D register banks into explicit wires to satisfy Verilog-2005 @* sensitivity
+    wire signed [31:0] act_row0 = {act_bank[0][3], act_bank[0][2], act_bank[0][1], act_bank[0][0]};
+    wire signed [31:0] act_row1 = {act_bank[1][3], act_bank[1][2], act_bank[1][1], act_bank[1][0]};
+    wire signed [31:0] act_row2 = {act_bank[2][3], act_bank[2][2], act_bank[2][1], act_bank[2][0]};
+    wire signed [31:0] act_row3 = {act_bank[3][3], act_bank[3][2], act_bank[3][1], act_bank[3][0]};
 
-            raw_wgt_0 = weight_bank[step_cnt][0];
-            raw_wgt_1 = weight_bank[step_cnt][1];
-            raw_wgt_2 = weight_bank[step_cnt][2];
-            raw_wgt_3 = weight_bank[step_cnt][3];
+    wire signed [31:0] wgt_row0 = {weight_bank[0][3], weight_bank[0][2], weight_bank[0][1], weight_bank[0][0]};
+    wire signed [31:0] wgt_row1 = {weight_bank[1][3], weight_bank[1][2], weight_bank[1][1], weight_bank[1][0]};
+    wire signed [31:0] wgt_row2 = {weight_bank[2][3], weight_bank[2][2], weight_bank[2][1], weight_bank[2][0]};
+    wire signed [31:0] wgt_row3 = {weight_bank[3][3], weight_bank[3][2], weight_bank[3][1], weight_bank[3][0]};
+
+    always @(*) begin
+        if (feeding_active) begin
+            case (step_cnt)
+                4'd0: begin
+                    {raw_act_3, raw_act_2, raw_act_1, raw_act_0} = act_row0;
+                    {raw_wgt_3, raw_wgt_2, raw_wgt_1, raw_wgt_0} = wgt_row0;
+                end
+                4'd1: begin
+                    {raw_act_3, raw_act_2, raw_act_1, raw_act_0} = act_row1;
+                    {raw_wgt_3, raw_wgt_2, raw_wgt_1, raw_wgt_0} = wgt_row1;
+                end
+                4'd2: begin
+                    {raw_act_3, raw_act_2, raw_act_1, raw_act_0} = act_row2;
+                    {raw_wgt_3, raw_wgt_2, raw_wgt_1, raw_wgt_0} = wgt_row2;
+                end
+                4'd3: begin
+                    {raw_act_3, raw_act_2, raw_act_1, raw_act_0} = act_row3;
+                    {raw_wgt_3, raw_wgt_2, raw_wgt_1, raw_wgt_0} = wgt_row3;
+                end
+                default: begin
+                    raw_act_0 = 8'sd0; raw_act_1 = 8'sd0; raw_act_2 = 8'sd0; raw_act_3 = 8'sd0;
+                    raw_wgt_0 = 8'sd0; raw_wgt_1 = 8'sd0; raw_wgt_2 = 8'sd0; raw_wgt_3 = 8'sd0;
+                end
+            endcase
         end else begin
             raw_act_0 = 8'sd0; raw_act_1 = 8'sd0; raw_act_2 = 8'sd0; raw_act_3 = 8'sd0;
             raw_wgt_0 = 8'sd0; raw_wgt_1 = 8'sd0; raw_wgt_2 = 8'sd0; raw_wgt_3 = 8'sd0;
@@ -296,6 +320,12 @@ module npu_top (
         end
     end
 
+    // Flatten packed post-processed matrix rows for glitch-free @* read mux
+    wire [31:0] post_row0 = {post_int8[0][3], post_int8[0][2], post_int8[0][1], post_int8[0][0]};
+    wire [31:0] post_row1 = {post_int8[1][3], post_int8[1][2], post_int8[1][1], post_int8[1][0]};
+    wire [31:0] post_row2 = {post_int8[2][3], post_int8[2][2], post_int8[2][1], post_int8[2][0]};
+    wire [31:0] post_row3 = {post_int8[3][3], post_int8[3][2], post_int8[3][1], post_int8[3][0]};
+
     // APB Read Multiplexer
     always @(*) begin
         case (paddr[7:0])
@@ -305,10 +335,10 @@ module npu_top (
             8'h0C: prdata = {15'd0, reg_dma_target, reg_dma_len};
             8'h10: prdata = {{8{reg_bias[23]}}, reg_bias};
             // Packed INT8 Post-Processed Matrix Outputs (1 word = 4 INT8)
-            8'h20: prdata = {post_int8[0][3], post_int8[0][2], post_int8[0][1], post_int8[0][0]}; // Row 0
-            8'h24: prdata = {post_int8[1][3], post_int8[1][2], post_int8[1][1], post_int8[1][0]}; // Row 1
-            8'h28: prdata = {post_int8[2][3], post_int8[2][2], post_int8[2][1], post_int8[2][0]}; // Row 2
-            8'h2C: prdata = {post_int8[3][3], post_int8[3][2], post_int8[3][1], post_int8[3][0]}; // Row 3
+            8'h20: prdata = post_row0; // Row 0
+            8'h24: prdata = post_row1; // Row 1
+            8'h28: prdata = post_row2; // Row 2
+            8'h2C: prdata = post_row3; // Row 3
             default: prdata = 32'd0;
         endcase
     end

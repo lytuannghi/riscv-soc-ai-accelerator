@@ -81,8 +81,8 @@ The complete hardware/software co-simulation boots from ROM, streams pre-trained
 ```
 
 - **Inference Latency:** 11 clock cycles ($220\text{ ns}$ at 50 MHz).
-- **Verification Status:** **100% PASSED** (Zero warnings, zero errors).
-- **Waveform File:** `riscv_ai_soc_waveform.vcd` (362 KB).
+- **Verification Status:** **100% PASSED** (Zero `-Wall` warnings, exact matrix match, zero errors).
+- **Waveform File:** `sim/riscv_ai_soc_waveform.vcd` (generated on run).
 
 ---
 
@@ -92,6 +92,10 @@ The complete hardware/software co-simulation boots from ROM, streams pre-trained
 # Run the complete hardware/software co-simulation
 python run_ai_soc_flow.py
 
+# Run synthesis readiness check & layout geometric DRC check
+python syn/analyze_rtl.py
+python layout/scripts/verify_gds_drc.py layout/gds/riscv_soc_ai_accelerator.gds --top soc_top
+
 # View simulation waveforms
-gtkwave output/waveform.vcd
+gtkwave sim/riscv_ai_soc_waveform.vcd
 ```

@@ -160,7 +160,9 @@ instructions.append(encode_j(0, 0, OP_JAL))
 while len(instructions) < 256:
     instructions.append(0x00000013)
 
-out_path = "D:/CODE/GGANTIGRAVITY/minipj/output/boot_firmware.hex"
+import os
+
+out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "boot_firmware.hex")
 with open(out_path, "w") as f:
     f.write("\n".join(f"{instr:08x}" for instr in instructions[:256]))
 
